@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Los_Portales.Models;
 
 namespace Los_Portales.Data
 {
@@ -9,5 +10,7 @@ namespace Los_Portales.Data
             : base(options)
         {
         }
+        public DbSet<Los_Portales.Models.Admin> Admin { get; set; }
+        
     }
 }

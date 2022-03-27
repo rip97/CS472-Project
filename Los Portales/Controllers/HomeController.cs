@@ -1,4 +1,5 @@
 ﻿using Los_Portales.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -18,6 +19,7 @@ namespace Los_Portales.Controllers
             return View();
         }
 
+        [Authorize(Roles="admin")]
         public IActionResult Privacy()
         {
             return View();

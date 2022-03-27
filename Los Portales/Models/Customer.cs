@@ -1,6 +1,6 @@
 ﻿namespace Los_Portales.Models
 {
-    public class Customer : User
+    public class Customer
     {
         /// <summary>
         /// This method takes in the User's info to create a new Account
@@ -8,6 +8,9 @@
         /// <param name="UserName"></param>
         /// <param name="Password"></param>
         /// <returns></returns>
+        /// 
+
+        /*
         public User CreateAccount(String UserName, String Password, String FirstName, String LastName, String PhoneNumber, String EmailAddress)
         {
             User newUser = new User();
@@ -56,5 +59,6 @@
             return EmailAddress;
         }
 
+    }*/
     }
 }
