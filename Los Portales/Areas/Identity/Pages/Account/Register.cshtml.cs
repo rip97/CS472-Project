@@ -25,26 +25,25 @@ namespace Los_Portales.Areas.Identity.Pages.Account
     {
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly UserManager<IdentityUser> _userManager;
-        private readonly IUserStore<IdentityUser> _userStore;
-        private readonly IUserEmailStore<IdentityUser> _emailStore;
+        private readonly IUserStore<IdentityUser> _userStore;       
         private readonly ILogger<RegisterModel> _logger;
-        private readonly IEmailSender _emailSender;
-        private readonly RoleManager<IdentityRole> _roleManager;
+        
+       
 
         public RegisterModel(
             UserManager<IdentityUser> userManager,
             IUserStore<IdentityUser> userStore,
             SignInManager<IdentityUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender,
-            RoleManager<IdentityRole> roleManager)
+            IEmailSender emailSender
+            )
         {
             _userManager = userManager;
             _userStore = userStore;
             _signInManager = signInManager;
             _logger = logger;
-            _emailSender = emailSender;
-            _roleManager = roleManager;
+            
+            
         }
 
         /// <summary>
@@ -83,7 +82,7 @@ namespace Los_Portales.Areas.Identity.Pages.Account
             public string LastName { get; set; }   
 
             [Required]
-            [Phone]
+            [DataType(DataType.PhoneNumber)]
             public string PhoneNumber { get; set; } 
 
             [Required]
@@ -91,7 +90,7 @@ namespace Los_Portales.Areas.Identity.Pages.Account
             public string DateOfBirth { get; set; }
 
             [Required]
-            [EmailAddress]
+            [DataType(DataType.EmailAddress)]
             [Display(Name = "Email")]
             public string Email { get; set; }
             
@@ -120,20 +119,21 @@ namespace Los_Portales.Areas.Identity.Pages.Account
             returnUrl ??= Url.Content("~/");
             if (ModelState.IsValid)
             {
-                var user = new IdentityUser { UserName = Input.UserName, Email = Input.Email };
-                var role = new IdentityRole { Name = "customer" };
-
-                await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
-                await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
+                var user = new IdentityUser { UserName = Input.UserName, Email = Input.Email};
+                
+                             
+                await _userStore.SetUserNameAsync(user, Input.UserName, CancellationToken.None);
                 
                 var result = await _userManager.CreateAsync(user, Input.Password);
-                var roleGood = await _roleManager.CreateAsync(role);
-                if (result.Succeeded && roleGood.Succeeded)
+                
+                if (result.Succeeded)
                 {
+                    await _userManager.AddToRoleAsync(user, "customer");
                     _logger.LogInformation("User created a new account with password.");
-                    
                     await _signInManager.SignInAsync(user, isPersistent: false);
                     return LocalRedirect(returnUrl);
+                    
+                    
                 }
                 foreach (var error in result.Errors)
                 {

@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Los_Portales.Data;
 using Los_Portales.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 namespace Los_Portales.Controllers
 {   
@@ -16,10 +17,13 @@ namespace Los_Portales.Controllers
     public class AdminsController : Controller
     {
         private readonly ApplicationDbContext _context;
-
-        public AdminsController(ApplicationDbContext context)
+        private readonly UserManager<IdentityUser> _userManager;
+        
+        public AdminsController(ApplicationDbContext context, UserManager<IdentityUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
+
         }
 
         // GET: Admins
@@ -58,12 +62,19 @@ namespace Los_Portales.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("AdminId,FirstName,LastName,UserName,Role,Password")] Admin admin)
-        {
+        {   
             if (ModelState.IsValid)
             {
-                _context.Add(admin);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                var user = new IdentityUser { UserName = admin.UserName };
+
+                var result = await _userManager.CreateAsync(user, admin.Password);
+                if (result.Succeeded)
+                {
+                    await _userManager.AddToRoleAsync(user, admin.Role);
+                    _context.Add(admin);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
             }
             return View(admin);
         }

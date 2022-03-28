@@ -19,7 +19,6 @@ namespace Los_Portales.Controllers
             return View();
         }
 
-        [Authorize(Roles="admin")]
         public IActionResult Privacy()
         {
             return View();

@@ -1,7 +1,7 @@
 ﻿namespace Los_Portales.Models
 {
     public class Transaction
-    {
+    {   
         public int Id { get; set; }
         public decimal Total { get; set; }
         public decimal Tax { get; set; }

@@ -6,5 +6,6 @@
         public string PlayName { get; set; }
         public DateTime PlayDate { get; set; }
         public DateTime PlayTime { get; set; }
+        
     }
 }
