@@ -4,6 +4,7 @@ using Los_Portales.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Los_Portales.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220331041134_Play")]
+    partial class Play
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -81,30 +83,6 @@ namespace Los_Portales.Data.Migrations
                     b.HasIndex("PlayId1");
 
                     b.ToTable("Play");
-                });
-
-            modelBuilder.Entity("Los_Portales.Models.Seat", b =>
-                {
-                    b.Property<int>("SeatId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SeatId"), 1L, 1);
-
-                    b.Property<int>("PlayId")
-                        .HasColumnType("int");
-
-                    b.Property<double>("Price")
-                        .HasColumnType("float");
-
-                    b.Property<int>("SeatNumber")
-                        .HasColumnType("int");
-
-                    b.HasKey("SeatId");
-
-                    b.HasIndex("PlayId");
-
-                    b.ToTable("Seat");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -310,17 +288,6 @@ namespace Los_Portales.Data.Migrations
                     b.HasOne("Los_Portales.Models.Play", null)
                         .WithMany("Plays")
                         .HasForeignKey("PlayId1");
-                });
-
-            modelBuilder.Entity("Los_Portales.Models.Seat", b =>
-                {
-                    b.HasOne("Los_Portales.Models.Play", "Play")
-                        .WithMany()
-                        .HasForeignKey("PlayId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Play");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

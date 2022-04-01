@@ -19,6 +19,7 @@ namespace Los_Portales.Data
                 // sets up a test admin users 
                 var adminID = await CreateUser(serviceProvider, testUserPw, "admin");
                 await CreateRole(serviceProvider, "admin");
+                await CreateRole(serviceProvider, "customer");
                 await AddUserToRole(serviceProvider, adminID, "admin");
                 SeedDB(context, adminID);
                 //SeedDB(context);
@@ -28,6 +29,21 @@ namespace Los_Portales.Data
         private static void SeedDB(ApplicationDbContext context, string adminID)
         {
             //TODO: Seed database here if needed.
+            
+            if(context.Play.Any())
+            {
+                return;
+            }
+            else
+            {
+                context.Play.AddRange(
+                    new Play
+                    {
+                        PlayName = "test",
+                        PlayDate = DateTime.Now,
+                        PlayTime = DateTime.Now
+                    });
+            }
         }
 
         // creates the theater admin owner 

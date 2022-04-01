@@ -1,0 +1,54 @@
+﻿@model IEnumerable<Los_Portales.Models.Play>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.PlayName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PlayDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PlayTime)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.PlayName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PlayDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PlayTime)
+            </td>
+            <td>
+                @if(User.IsInRole("admin"))
+                {
+                    <a asp-action="Edit" asp-route-id="@item.PlayId">Edit | </a> 
+                    <a asp-action="Details" asp-route-id="@item.PlayId">Details | </a> 
+                    <a asp-action="Delete" asp-route-id="@item.PlayId">Delete | </a>  
+                }
+                @if(User.IsInRole("customer"))
+                {
+                }
+                
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
