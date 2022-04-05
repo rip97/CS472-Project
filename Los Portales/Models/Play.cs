@@ -16,7 +16,7 @@ namespace Los_Portales.Models
         public DateTime PlayTime { get; set; }
 
         // a play can have many seats 
-        public ICollection<Play>? Plays { get; set; }
+        public ICollection<Seat>? Seats { get; set; }
         
     }
 }

@@ -13,7 +13,7 @@ namespace Los_Portales.Models
 
         // to show that the seat belongs to a certain play 
         public int PlayId { get; set; }
-        public Play Play { get; set; }
+        public Play? Play { get; set; }
 
     }
 }

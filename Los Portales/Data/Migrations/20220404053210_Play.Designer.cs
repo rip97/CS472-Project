@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Los_Portales.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220331042907_Seat")]
-    partial class Seat
+    [Migration("20220404053210_Play")]
+    partial class Play
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -68,9 +68,6 @@ namespace Los_Portales.Data.Migrations
                     b.Property<DateTime>("PlayDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("PlayId1")
-                        .HasColumnType("int");
-
                     b.Property<string>("PlayName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -79,8 +76,6 @@ namespace Los_Portales.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("PlayId");
-
-                    b.HasIndex("PlayId1");
 
                     b.ToTable("Play");
                 });
@@ -307,17 +302,10 @@ namespace Los_Portales.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Los_Portales.Models.Play", b =>
-                {
-                    b.HasOne("Los_Portales.Models.Play", null)
-                        .WithMany("Plays")
-                        .HasForeignKey("PlayId1");
-                });
-
             modelBuilder.Entity("Los_Portales.Models.Seat", b =>
                 {
                     b.HasOne("Los_Portales.Models.Play", "Play")
-                        .WithMany()
+                        .WithMany("Seats")
                         .HasForeignKey("PlayId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -378,7 +366,7 @@ namespace Los_Portales.Data.Migrations
 
             modelBuilder.Entity("Los_Portales.Models.Play", b =>
                 {
-                    b.Navigation("Plays");
+                    b.Navigation("Seats");
                 });
 #pragma warning restore 612, 618
         }

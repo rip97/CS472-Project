@@ -5,11 +5,10 @@
 }
 
 <h1>Index</h1>
+<h5> Search for the play name to view all seats</h5>
+<input type="text" id="filter" onkeyup="filterSeats" placeholder="Search for play Name..." />
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
+<table class="table" id="seats">
     <thead>
         <tr>
             <th>
@@ -18,10 +17,10 @@
             <th>
                 @Html.DisplayNameFor(model => model.Price)
             </th>
-            <th>
+            <th >
                 @Html.DisplayNameFor(model => model.Play)
             </th>
-            <th></th>
+            <th> Actions </th>
         </tr>
     </thead>
     <tbody>
@@ -45,3 +44,4 @@
 }
     </tbody>
 </table>
+<script></script>

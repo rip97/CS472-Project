@@ -30,20 +30,6 @@ namespace Los_Portales.Data
         {
             //TODO: Seed database here if needed.
             
-            if(context.Play.Any())
-            {
-                return;
-            }
-            else
-            {
-                context.Play.AddRange(
-                    new Play
-                    {
-                        PlayName = "test",
-                        PlayDate = DateTime.Now,
-                        PlayTime = DateTime.Now
-                    });
-            }
         }
 
         // creates the theater admin owner 

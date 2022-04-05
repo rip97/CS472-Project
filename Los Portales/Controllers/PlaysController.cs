@@ -20,33 +20,16 @@ namespace Los_Portales.Controllers
         {
             _context = context;
         }
-        [AllowAnonymous]
+
         // GET: Plays
+        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Play.ToListAsync());
         }
 
-        // GET: Plays/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var play = await _context.Play
-                .FirstOrDefaultAsync(m => m.PlayId == id);
-            if (play == null)
-            {
-                return NotFound();
-            }
-
-            return View(play);
-        }
-
+        [Authorize(Roles ="admin")]
         // GET: Plays/Create
-        [Authorize(Roles = "admin")]
         public IActionResult Create()
         {
             return View();
@@ -61,14 +44,36 @@ namespace Los_Portales.Controllers
         public async Task<IActionResult> Create([Bind("PlayId,PlayName,PlayDate,PlayTime")] Play play)
         {
             if (ModelState.IsValid)
-            {
+            {   
+                
                 _context.Add(play);
                 await _context.SaveChangesAsync();
+                var newPlay = await _context.Play
+                 .FirstOrDefaultAsync(m => m.PlayId == play.PlayId);
+
+                // below code creates 80 defualt seats for the new play, the admin can edit the seat prices from the seat controller for each play
+                List<Seat> seats = CreateSeats(newPlay);
+                foreach(Seat seat in seats)
+                {
+                    await Create(seat);
+                }
                 return RedirectToAction(nameof(Index));
             }
             return View(play);
         }
 
+        /// <summary>
+        /// saves the new seat to database 
+        /// </summary>
+        /// <param name="seat"></param>
+        /// <returns> none </returns>
+        private async Task Create(Seat seat)
+        {   
+            _context.Add(seat);
+            await _context.SaveChangesAsync();           
+        }
+
+        [Authorize(Roles = "admin")]
         // GET: Plays/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -90,6 +95,7 @@ namespace Los_Portales.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Edit(int id, [Bind("PlayId,PlayName,PlayDate,PlayTime")] Play play)
         {
             if (id != play.PlayId)
@@ -121,6 +127,7 @@ namespace Los_Portales.Controllers
         }
 
         // GET: Plays/Delete/5
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -141,6 +148,7 @@ namespace Los_Portales.Controllers
         // POST: Plays/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var play = await _context.Play.FindAsync(id);
@@ -152,6 +160,46 @@ namespace Los_Portales.Controllers
         private bool PlayExists(int id)
         {
             return _context.Play.Any(e => e.PlayId == id);
+        }
+
+        /// <summary>
+        /// method generates 80 new seats for a new play with defualt values 
+        /// </summary>
+        /// <param name="play"></param>
+        /// <returns> list of seats </returns>
+        private List<Seat> CreateSeats(Play play)
+        {   
+            List<Seat> seats = new List<Seat>();
+            int lastSeatId = getLastSeatId();
+            int newStartId = lastSeatId + 1; 
+            for (int i = 0; i < 80; i++)
+            {
+                Seat seat = new Seat();
+                seat.PlayId = newStartId;
+                seat.PlayId = play.PlayId;
+                seat.Play = play;
+                seats.Add(seat);
+                seat.SeatNumber = i + 1;
+                seat.Price = 0.00;
+
+                newStartId += 1;
+            }
+            return seats;
+        }
+
+        /// <summary>
+        ///  method will grab the last seat in the seat table 
+        /// </summary>
+        /// <returns></returns>
+        private int getLastSeatId()
+        {
+            var applicationDbContext = _context.Seat.Include(s => s.Play);
+            List<Seat> seats = applicationDbContext.ToList();
+
+            // grab the last object in the list, the list is assmumed to be already sorted 
+            var lastSeat = seats[^1];  
+
+            return lastSeat.SeatId;
         }
     }
 }

@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Los_Portales.Data;
 using Los_Portales.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Los_Portales.Controllers
 {
@@ -20,6 +21,7 @@ namespace Los_Portales.Controllers
             _context = context;
         }
 
+        [Authorize(Roles = "admin")]
         // GET: Seats
         public async Task<IActionResult> Index()
         {
@@ -27,50 +29,20 @@ namespace Los_Portales.Controllers
             return View(await applicationDbContext.ToListAsync());
         }
 
-        // GET: Seats/Details/5
-        public async Task<IActionResult> Details(int? id)
+        // GET: SeatingChart 
+        // Method to access the seating chart by user. 
+        public async Task<IActionResult> SeatingChart()
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
 
-            var seat = await _context.Seat
-                .Include(s => s.Play)
-                .FirstOrDefaultAsync(m => m.SeatId == id);
-            if (seat == null)
-            {
-                return NotFound();
-            }
-
-            return View(seat);
-        }
-
-        // GET: Seats/Create
-        public IActionResult Create()
-        {
-            ViewData["PlayId"] = new SelectList(_context.Play, "PlayId", "PlayName");
+            //var play = await _context.Play
+                //.FirstOrDefaultAsync(m => m.PlayId == id);
+            //List<Seat> seats = (List<Seat>)play.Seats;
             return View();
         }
 
-        // POST: Seats/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("SeatId,SeatNumber,Price,PlayId")] Seat seat)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(seat);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["PlayId"] = new SelectList(_context.Play, "PlayId", "PlayName", seat.PlayId);
-            return View(seat);
-        }
-
+        
         // GET: Seats/Edit/5
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -92,6 +64,7 @@ namespace Los_Portales.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Edit(int id, [Bind("SeatId,SeatNumber,Price,PlayId")] Seat seat)
         {
             if (id != seat.SeatId)
@@ -124,6 +97,7 @@ namespace Los_Portales.Controllers
         }
 
         // GET: Seats/Delete/5
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -145,6 +119,7 @@ namespace Los_Portales.Controllers
         // POST: Seats/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var seat = await _context.Seat.FindAsync(id);
