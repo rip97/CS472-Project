@@ -3,24 +3,26 @@
 
 // Write your JavaScript code.
 
+
+
 function filterSeats() {
 
-    var input, filter, table, tr, td;
+    var input, filter, table, tRow, tData;
 
     input = document.getElementById("filter");
-    filter = input.value.toUpperCase();
-    table = document.getElementById("seats");
-    tr = table.getElementsByTagName("tr");
+    filter = input.nodeValue.toUpperCase();
+    table = document.getElementById("seatTable");
+    tRow = table.getElementsByTagName("tr");
 
-    for (var i = 0; i < tr.length; i++) {
-        td = tr[i].getElementsByTagName("td")[0];
-        if (id) {
-            txtValue = td.textContent || td.innerText;
+    for (var i = 0; i < tRow.length; i++) {
+        tData = tRow[i].getElementsByTagName("td")[2];
+        if (tData) {
+            txtValue = tData.textContent || tData.innerText;
             if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                tr[i].style.display = "";
+                tRow[i].style.display = "";
             }
             else {
-                tr[i].style.display = "none"
+                tRow[i].style.display = "none"
             }
         }
 
