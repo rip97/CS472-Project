@@ -1,0 +1,39 @@
+﻿@model Los_Portales.Models.Seat
+
+@{
+    ViewData["Title"] = "AddToCart";
+}
+
+<h1>AddToCart</h1>
+
+<div>
+    <h4>Seat @Model.SeatNumber.ToString()</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.SeatNumber)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.SeatNumber)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Play)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Play.PlayName)
+        </dd>
+    </dl>
+</div>
+<form>
+    <button title="Add to Cart"></button>
+</form>
+<div>
+    
+    <a asp-action="SeatingChart">Back to Seating Chart</a>
+</div>

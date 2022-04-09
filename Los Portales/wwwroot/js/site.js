@@ -4,9 +4,9 @@
 // Write your JavaScript code.
 
 
-
 function filterSeats() {
 
+    
     var input, filter, table, tRow, tData;
 
     input = document.getElementById("filter");

@@ -16,3 +16,35 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.seat-avialable {
+    background-color: #00ff90;
+    height: 80px;
+    width: 80px;
+    margin: 20px;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+.seat-taken {
+    background-color: #ff0000;
+    height: 80px;
+    width: 80px;
+    margin: 20px;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+
+.stage {
+    background-color: gray;
+    height: 80px;
+    width:100%;
+    margin: 20px 0;
+
+}
+.container-seat {
+    border-radius:10px;
+    background-color:#242333;
+    margin-bottom: 30px;
+    
+}
+

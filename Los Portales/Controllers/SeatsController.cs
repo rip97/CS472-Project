@@ -29,15 +29,58 @@ namespace Los_Portales.Controllers
             return View(await applicationDbContext.ToListAsync());
         }
 
+        /// <summary>
+        /// Will route a seat to the shopping cart 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [Authorize]
+        public async Task<IActionResult> AddToCart(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var admin = await _context.Seat
+                .FirstOrDefaultAsync(m => m.SeatId == id);
+            if (admin == null)
+            {
+                return NotFound();
+            }
+
+            return View(admin);
+        }
+
+        [Authorize]
         // GET: SeatingChart 
         // Method to access the seating chart by user. 
-        public async Task<IActionResult> SeatingChart()
+        public async Task<IActionResult> SeatingChart(int id)
         {
+            var applicationDbContext = _context.Seat.Include(s => s.Play);
+            
+            return View(findCorrectSeats(id, await applicationDbContext.ToListAsync()));
+        }
 
-            //var play = await _context.Play
-                //.FirstOrDefaultAsync(m => m.PlayId == id);
-            //List<Seat> seats = (List<Seat>)play.Seats;
-            return View();
+        /// <summary>
+        /// Method returns a list of correct seats with a single play id 
+        /// </summary>
+        /// <param name="searchVal"></param>
+        /// <param name="seats"></param>
+        /// <returns> List of seats </returns>
+        private List<Seat> findCorrectSeats(int searchVal, List<Seat> seats)
+        {   
+            List<Seat> result = new List<Seat>();
+            foreach (var seat in seats)
+            {
+                if(seat.PlayId == searchVal)
+                {
+                    result.Add(seat);
+                }
+            }
+
+            return result;
+
         }
 
         
