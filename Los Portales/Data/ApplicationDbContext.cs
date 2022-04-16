@@ -13,6 +13,7 @@ namespace Los_Portales.Data
         public DbSet<Los_Portales.Models.Admin> Admin { get; set; }
         public DbSet<Los_Portales.Models.Play> Play { get; set; }
         public DbSet<Los_Portales.Models.Seat> Seat { get; set; }
+        public DbSet<Los_Portales.Models.Transaction> Transaction { get; set; }
         
         
         
