@@ -1,51 +1,27 @@
-﻿@model IEnumerable<Los_Portales.Models.Seat>
+﻿@model List<Los_Portales.Models.Seat>
 
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
-<h5> Search for the play name to view all seats</h5>
-<input type="text" id="filter" onkeyup="filterSeats" placeholder="Search for play Name..." />
 
-<table class="table table-striped" id="seatTable">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.SeatNumber)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Price)
-            </th>
-            <th >
-                @Html.DisplayNameFor(model => model.Play)
-            </th>
-            <th> Actions </th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.SeatNumber)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td id="playName">
-                @Html.DisplayFor(modelItem => item.Play.PlayName)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.SeatId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.SeatId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.SeatId">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
-@section scripts
-{
-    <script type="text/javascript" src="~/js/site.js"></script>
-}
+<h1 style="text-align:center">Seating Chart: @Model[0].Play.PlayName</h1>
 
+<div class="container-fuild"> 
+    <div class="stage"> <h2 style="text-align:center; align-content:center; color:black" > Stage </h2></div>
+        <div class="container-seat">
+            @for(int i = 0; i <8; i++)
+            {   
+                <div class="row" style="display:flex;margin-left:45px;">
+                @for(int j = 0; j < 10; j++)
+                {  
+                    <div class="seat-avialable"> 
+                        <h6 class="text-dark"> @Model[j+(i*10)].SeatNumber.ToString()</h6>
+                        <a class="text-dark" asp-action="Edit" asp-route-id="@Model[j+(i*10)].SeatId.ToString()" ><h6> Edit </h6></a>
+                    </div>
+          
+                }
+                </div>       
+            }     
+    </div> 
+</div>

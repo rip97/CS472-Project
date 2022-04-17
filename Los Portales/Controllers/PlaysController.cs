@@ -196,10 +196,17 @@ namespace Los_Portales.Controllers
             var applicationDbContext = _context.Seat.Include(s => s.Play);
             List<Seat> seats = applicationDbContext.ToList();
 
-            // grab the last object in the list, the list is assmumed to be already sorted 
-            var lastSeat = seats[^1];  
+            // grab the last object in the list, the list is assmumed to be already sorted
+            // if no seat ids return 0
+            if (seats.Count == 0)
+                return 0;
+            else
+            {
+                var lastSeat = seats[^1];
+                return lastSeat.SeatId;
+            }
 
-            return lastSeat.SeatId;
+            
         }
     }
 }

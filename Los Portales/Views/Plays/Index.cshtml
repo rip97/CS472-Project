@@ -4,30 +4,31 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
-@if(User.IsInRole("admin"))
-{
+<h1> Current Plays </h1>
+
+    @if(User.IsInRole("admin"))
+    {
     <p>
         <a asp-action="Create">Create New</a>
     </p>
-}
-<table class="table">
+    }
+    <table class="table table-md" style="color:white">
     <thead>
         <tr>
-            <th>
+            <th scope="col">
                 @Html.DisplayNameFor(model => model.PlayName)
             </th>
-            <th>
+            <th scope="col"> 
                 @Html.DisplayNameFor(model => model.PlayDate)
             </th>
-            <th>
+            <th scope="col">
                 @Html.DisplayNameFor(model => model.PlayTime)
             </th>
-            <th></th>
+            <th scope="col"></th>
         </tr>
     </thead>
-    <tbody>
-@foreach (var item in Model) {
+    <tbody style="color:white">
+    @foreach (var item in Model) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.PlayName)
@@ -42,7 +43,7 @@
                 @if(User.IsInRole("admin"))
                 {
                 <a asp-action="Edit" asp-route-id="@item.PlayId">Edit | </a> 
-                <a asp-action="Details" asp-route-id="@item.PlayId">Details | </a> 
+                <a asp-controller="Seats" asp-action="Index" asp-route-id="@item.PlayId">Assign Seat Prices | </a> 
                 <a asp-action="Delete" asp-route-id="@item.PlayId">Delete</a>
                 }
                 @if(User.IsInRole("customer"))
@@ -51,6 +52,7 @@
                 }
             </td>
         </tr>
-}
+    }
     </tbody>
-</table>
+    </table>
+

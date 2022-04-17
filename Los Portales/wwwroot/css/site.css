@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Lato&display=swap');
+
 html {
   font-size: 14px;
 }
@@ -8,13 +10,25 @@ html {
   }
 }
 
+a{
+    color:white;
+}
+
 html {
   position: relative;
   min-height: 100%;
 }
 
+
+
 body {
-  margin-bottom: 60px;
+    background-color: #242333;
+    color:white;
+    display: flex;
+    flex-direction: column;
+    
+    font-family: 'Lato', sans-serif;
+    margin-bottom: 60px;
 }
 
 .seat-avialable {
@@ -35,15 +49,16 @@ body {
 }
 
 .stage {
-    background-color: gray;
-    height: 80px;
-    width:100%;
-    margin: 20px 0;
+    background-color: steelblue;
+    height: 150px;
+    width: 100%;
+    margin: 15px 0;
+    transform: rotateX(-45deg);
+    box-shadow: 0 3px 10px rgba(255, 255, 255, 0.7);
 
 }
 .container-seat {
     border-radius:10px;
-    background-color:#242333;
     margin-bottom: 30px;
     
 }

@@ -23,10 +23,11 @@ namespace Los_Portales.Controllers
 
         [Authorize(Roles = "admin")]
         // GET: Seats
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int id)
         {
             var applicationDbContext = _context.Seat.Include(s => s.Play);
-            return View(await applicationDbContext.ToListAsync());
+
+            return View(findCorrectSeats(id, await applicationDbContext.ToListAsync()));
         }
 
         /// <summary>
@@ -78,17 +79,14 @@ namespace Los_Portales.Controllers
                     result.Add(seat);
                 }
             }
-
             return result;
-
         }
-
-        
+    
         // GET: Seats/Edit/5
         [Authorize(Roles = "admin")]
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null)
+            if ((id) == null)
             {
                 return NotFound();
             }
@@ -108,7 +106,7 @@ namespace Los_Portales.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "admin")]
-        public async Task<IActionResult> Edit(int id, [Bind("SeatId,SeatNumber,Price,PlayId")] Seat seat)
+        public async Task<IActionResult> Edit(int id,[Bind("SeatId,SeatNumber,Price,PlayId")] Seat seat)
         {
             if (id != seat.SeatId)
             {
@@ -133,42 +131,10 @@ namespace Los_Portales.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", "Seats", new {id= seat.PlayId});
             }
             ViewData["PlayId"] = new SelectList(_context.Play, "PlayId", "PlayName", seat.PlayId);
             return View(seat);
-        }
-
-        // GET: Seats/Delete/5
-        [Authorize(Roles = "admin")]
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var seat = await _context.Seat
-                .Include(s => s.Play)
-                .FirstOrDefaultAsync(m => m.SeatId == id);
-            if (seat == null)
-            {
-                return NotFound();
-            }
-
-            return View(seat);
-        }
-
-        // POST: Seats/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        [Authorize(Roles = "admin")]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var seat = await _context.Seat.FindAsync(id);
-            _context.Seat.Remove(seat);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
         }
 
         private bool SeatExists(int id)
@@ -176,4 +142,5 @@ namespace Los_Portales.Controllers
             return _context.Seat.Any(e => e.SeatId == id);
         }
     }
+
 }

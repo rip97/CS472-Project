@@ -1,4 +1,5 @@
 ﻿@model List<Los_Portales.Models.Seat>
+
 <!-- Waiting for the transaction class to insert here so we may 
     check the seats that have been purchased and mark them with a red color 
     and hide the hyper link
@@ -11,7 +12,7 @@
 
 <h1 style="text-align:center">Seating Chart: @Model[0].Play?.PlayName</h1>
 
-<div class="container-fuild" id="seatCon"> 
+<div class="container-fuild" id="seats"> 
     <div class="stage"> <h2 style="text-align:center; align-content:center;" > Stage </h2></div>
         <div class="container-seat">
             @for(int i = 0; i <8; i++)
@@ -20,8 +21,8 @@
                 @for(int j = 0; j < 10; j++)
                 {  
                     <div class="seat-avialable"> 
-                        <h6> @Model[j+(i*10)].SeatNumber.ToString()</h6>
-                        <a asp-action="AddToCart" asp-route-id=@Model[j+(i*10)].SeatId.ToString()><h6> View </h6></a>
+                        <h6 class="text-dark"> @Model[j+(i*10)].SeatNumber.ToString()</h6>
+                        <a class="text-dark" asp-action="AddToCart" asp-route-id=@Model[j+(i*10)].SeatId.ToString()><h6> View </h6></a>
                     </div>
           
                 }

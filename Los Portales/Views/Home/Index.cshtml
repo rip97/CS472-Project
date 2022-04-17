@@ -3,6 +3,13 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4"> Welcome to Los Portales Theater! </h1> 
+    <div class="row">
+        <div class="col-md-4 offset-4">
+            <div class="list-group">
+                <a class="list-group-item list-group-item-action" asp-controller="Plays" asp-action="Index"> View Plays </a>
+                <a class="list-group-item list-group-item-action" asp-area="Identity" asp-page="/Account/Register"> Create An Account </a>
+            </div>
+         </div>
+    </div>
 </div>

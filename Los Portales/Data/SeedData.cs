@@ -28,14 +28,6 @@ namespace Los_Portales.Data
 
         private static void SeedDB(ApplicationDbContext context, string adminID)
         {
-            //TODO: Seed database here if needed.
-            
-        }
-
-        // creates the theater admin owner 
-        private static void SeedDB(ApplicationDbContext context)
-        {   
-            /*
             if (context.Admin.Any())
             {
                 return;   // DB has been seeded
@@ -48,9 +40,18 @@ namespace Los_Portales.Data
                         FirstName = "V",
                         LastName = "Edurado",
                         UserName = "vEdurado",
-                        Role = "admin"
+                        Role = "admin",
+                        Password="SuperAdmin22!"
+                        
                     });
-            }*/
+            }
+
+        }
+
+        // creates the theater admin owner 
+        private static void SeedDB(ApplicationDbContext context)
+        {   
+            
         }
 
         public static async Task<string> CreateUser(IServiceProvider serviceProvider,

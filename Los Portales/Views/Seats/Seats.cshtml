@@ -1,0 +1,53 @@
+﻿@model IEnumerable<Los_Portales.Models.Seat>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Seating Information for Plays </h1>
+
+
+<div class="form-group">
+    <label class="control-label"> Search Table For A Play Name</label>
+    <input id="search" class="form-control" type="text" onkeyup="searchTable()" placeholder="Search for a play name" />
+</div>
+
+<table class="table table-striped" id="seatTable">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.SeatNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th >
+                @Html.DisplayNameFor(model => model.Play)
+            </th>
+            <th> Actions </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.SeatNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td id="playName">
+                @Html.DisplayFor(modelItem => item.Play.PlayName)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.SeatId">Edit</a>                
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+@section scripts
+{
+    <script type="text/javascript" src="~/js/Search.js"></script>
+}
+

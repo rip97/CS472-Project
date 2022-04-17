@@ -4,7 +4,7 @@
     ViewData["Title"] = "AddToCart";
 }
 
-<h1>AddToCart</h1>
+<h1>Add To Shopping Cart</h1>
 
 <div>
     <h4>Seat @Model.SeatNumber.ToString()</h4>
@@ -31,9 +31,10 @@
     </dl>
 </div>
 <form>
-    <button title="Add to Cart"></button>
+    <button type="submit" class="btn btn-success">Add to Cart</button>
+
 </form>
 <div>
     
-    <a asp-action="SeatingChart">Back to Seating Chart</a>
+    <a asp-action="SeatingChart" asp-route-id="@Model.PlayId">Back to Seating Chart</a>
 </div>
