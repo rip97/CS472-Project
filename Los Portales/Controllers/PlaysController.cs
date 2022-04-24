@@ -175,13 +175,13 @@ namespace Los_Portales.Controllers
             for (int i = 0; i < 80; i++)
             {
                 Seat seat = new Seat();
-                seat.PlayId = newStartId;
+                seat.SeatId = newStartId;
                 seat.PlayId = play.PlayId;
                 seat.Play = play;
                 seats.Add(seat);
                 seat.SeatNumber = i + 1;
                 seat.Price = 0.00;
-
+                // seat.TransactionId = 0;
                 newStartId += 1;
             }
             return seats;
@@ -190,7 +190,7 @@ namespace Los_Portales.Controllers
         /// <summary>
         ///  method will grab the last seat in the seat table 
         /// </summary>
-        /// <returns></returns>
+        /// <returns> Last Seat Id </returns>
         private int getLastSeatId()
         {
             var applicationDbContext = _context.Seat.Include(s => s.Play);

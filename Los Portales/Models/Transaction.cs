@@ -9,7 +9,8 @@ namespace Los_Portales.Models
         public decimal Tax { get; set; }
         public ICollection<Seat>? Seats { get; set; }
         public int NumberOfTickets { get; set; }
-        public decimal CalcTotal() { return Total = NumberOfTickets * Tax; }
+
+        // public decimal CalcTotal() { return Total = NumberOfTickets * Tax; }
 
         public string PaymentMethod
         {         

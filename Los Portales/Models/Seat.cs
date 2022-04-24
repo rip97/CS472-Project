@@ -15,5 +15,10 @@ namespace Los_Portales.Models
         public int PlayId { get; set; }
         public Play? Play { get; set; }
 
+        // Seat is part of a transaction
+        //public int TransactionId { get; set; }
+
+        //public Transaction? Transaction { get; set; }
+
     }
 }

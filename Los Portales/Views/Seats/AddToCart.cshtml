@@ -30,7 +30,7 @@
         </dd>
     </dl>
 </div>
-<form>
+<form asp-controller="Transactions" asp-action="AddToCart" asp-route-id="@Model.SeatId">
     <button type="submit" class="btn btn-success">Add to Cart</button>
 
 </form>

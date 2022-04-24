@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Los_Portales.Data;
 using Los_Portales.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Los_Portales.Controllers
 {
@@ -15,9 +16,35 @@ namespace Los_Portales.Controllers
     {
         private readonly ApplicationDbContext _context;
 
+        // private List<Seat> seats = new List<Seat>();
+
         public TransactionsController(ApplicationDbContext context)
         {
             _context = context;
+        }
+
+        [Authorize]
+        // GET: ShoppingCart 
+        public async Task<IActionResult> AddToCart(int? id)
+        {  
+            List<Seat> seats = new List<Seat>();
+            if(id == null)
+                return NotFound();
+            var seat = await _context.Seat
+                .FirstOrDefaultAsync(m => m.SeatId == id);
+            var paly = await _context.Play.FirstOrDefaultAsync(m => m.PlayId == seat.PlayId);
+            if (seat == null)
+            {
+                return NotFound();
+            }
+            seats.Add(seat);
+
+            return View(seats);
+        }
+
+        public IActionResult Cart()
+        {
+            return View();
         }
 
         // GET: Transactions

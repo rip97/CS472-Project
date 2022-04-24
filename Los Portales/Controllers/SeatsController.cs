@@ -22,11 +22,11 @@ namespace Los_Portales.Controllers
         }
 
         [Authorize(Roles = "admin")]
-        // GET: Seats
+        // GET: Seats 
+        // seat 
         public async Task<IActionResult> Index(int id)
         {
             var applicationDbContext = _context.Seat.Include(s => s.Play);
-
             return View(findCorrectSeats(id, await applicationDbContext.ToListAsync()));
         }
 
@@ -36,21 +36,24 @@ namespace Los_Portales.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [Authorize]
+        // GET: Id is the seat Id
         public async Task<IActionResult> AddToCart(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
-
-            var admin = await _context.Seat
+            
+            var seat = await _context.Seat
                 .FirstOrDefaultAsync(m => m.SeatId == id);
-            if (admin == null)
+            var play = await _context.Play.FirstOrDefaultAsync(m => m.PlayId == seat.PlayId);
+            seat.Play = play;
+            if (seat == null)
             {
                 return NotFound();
             }
 
-            return View(admin);
+            return View(seat);
         }
 
         [Authorize]
@@ -59,7 +62,8 @@ namespace Los_Portales.Controllers
         public async Task<IActionResult> SeatingChart(int id)
         {
             var applicationDbContext = _context.Seat.Include(s => s.Play);
-            
+
+
             return View(findCorrectSeats(id, await applicationDbContext.ToListAsync()));
         }
 

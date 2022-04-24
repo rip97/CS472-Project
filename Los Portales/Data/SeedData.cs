@@ -26,6 +26,7 @@ namespace Los_Portales.Data
             }
         }
 
+        // creates the theater admin owner 
         private static void SeedDB(ApplicationDbContext context, string adminID)
         {
             if (context.Admin.Any())
@@ -34,7 +35,7 @@ namespace Los_Portales.Data
             }
             else
             {
-                context.Admin.AddRange(
+                context.Admin.Add(
                     new Admin
                     {
                         FirstName = "V",
@@ -48,7 +49,7 @@ namespace Los_Portales.Data
 
         }
 
-        // creates the theater admin owner 
+        
         private static void SeedDB(ApplicationDbContext context)
         {   
             

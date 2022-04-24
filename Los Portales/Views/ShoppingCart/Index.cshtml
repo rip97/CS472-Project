@@ -1,0 +1,22 @@
+﻿@model Los_Portales.ViewModels.ShoppingCartViewModel
+@{
+    ViewData["Title"] = "Index";
+}
+<div>
+    <h1>Index</h1>
+    <table>
+        <thead>
+            <tr>
+            <th scope="col">
+                @Html.DisplayNameFor(model => model.CartItems)
+            </th>
+            <th scope="col"> 
+                @Html.DisplayNameFor(model => model.CartTotal)
+            </th>
+            <th scope="col"></th>
+        </tr>
+        </thead>
+    </table>
+</div>
+
+
