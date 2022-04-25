@@ -3,7 +3,8 @@
 namespace Los_Portales.Models
 {
     public class Play
-    {
+    {   
+        [Key]
         public int PlayId { get; set; }
         [Required]
         public string PlayName { get; set; }

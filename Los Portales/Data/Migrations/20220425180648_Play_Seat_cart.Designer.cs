@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Los_Portales.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220416055917_Transaction")]
-    partial class Transaction
+    [Migration("20220425180648_Play_Seat_cart")]
+    partial class Play_Seat_cart
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -57,6 +57,30 @@ namespace Los_Portales.Data.Migrations
                     b.ToTable("Admin");
                 });
 
+            modelBuilder.Entity("Los_Portales.Models.Cart", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("PlayId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SeatId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SeatId");
+
+                    b.ToTable("Cart");
+                });
+
             modelBuilder.Entity("Los_Portales.Models.Play", b =>
                 {
                     b.Property<int>("PlayId")
@@ -97,51 +121,11 @@ namespace Los_Portales.Data.Migrations
                     b.Property<int>("SeatNumber")
                         .HasColumnType("int");
 
-                    b.Property<int?>("TransactionId")
-                        .HasColumnType("int");
-
                     b.HasKey("SeatId");
 
                     b.HasIndex("PlayId");
 
-                    b.HasIndex("TransactionId");
-
                     b.ToTable("Seat");
-                });
-
-            modelBuilder.Entity("Los_Portales.Models.Transaction", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<long>("CreditCardNumber")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime>("ExpirationDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("NameOnCard")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("NumberOfTickets")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SecurityCode")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("Tax")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("Total")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Transaction");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -342,6 +326,17 @@ namespace Los_Portales.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("Los_Portales.Models.Cart", b =>
+                {
+                    b.HasOne("Los_Portales.Models.Seat", "seat")
+                        .WithMany()
+                        .HasForeignKey("SeatId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("seat");
+                });
+
             modelBuilder.Entity("Los_Portales.Models.Seat", b =>
                 {
                     b.HasOne("Los_Portales.Models.Play", "Play")
@@ -349,10 +344,6 @@ namespace Los_Portales.Data.Migrations
                         .HasForeignKey("PlayId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("Los_Portales.Models.Transaction", null)
-                        .WithMany("Seats")
-                        .HasForeignKey("TransactionId");
 
                     b.Navigation("Play");
                 });
@@ -409,11 +400,6 @@ namespace Los_Portales.Data.Migrations
                 });
 
             modelBuilder.Entity("Los_Portales.Models.Play", b =>
-                {
-                    b.Navigation("Seats");
-                });
-
-            modelBuilder.Entity("Los_Portales.Models.Transaction", b =>
                 {
                     b.Navigation("Seats");
                 });

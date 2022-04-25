@@ -68,7 +68,7 @@ namespace Los_Portales.Controllers
         /// <param name="seat"></param>
         /// <returns> none </returns>
         private async Task Create(Seat seat)
-        {   
+        {
             _context.Add(seat);
             await _context.SaveChangesAsync();           
         }
@@ -170,43 +170,19 @@ namespace Los_Portales.Controllers
         private List<Seat> CreateSeats(Play play)
         {   
             List<Seat> seats = new List<Seat>();
-            int lastSeatId = getLastSeatId();
-            int newStartId = lastSeatId + 1; 
             for (int i = 0; i < 80; i++)
             {
                 Seat seat = new Seat();
-                seat.SeatId = newStartId;
                 seat.PlayId = play.PlayId;
                 seat.Play = play;
                 seats.Add(seat);
                 seat.SeatNumber = i + 1;
                 seat.Price = 0.00;
-                // seat.TransactionId = 0;
-                newStartId += 1;
+                
+                
             }
             return seats;
         }
-
-        /// <summary>
-        ///  method will grab the last seat in the seat table 
-        /// </summary>
-        /// <returns> Last Seat Id </returns>
-        private int getLastSeatId()
-        {
-            var applicationDbContext = _context.Seat.Include(s => s.Play);
-            List<Seat> seats = applicationDbContext.ToList();
-
-            // grab the last object in the list, the list is assmumed to be already sorted
-            // if no seat ids return 0
-            if (seats.Count == 0)
-                return 0;
-            else
-            {
-                var lastSeat = seats[^1];
-                return lastSeat.SeatId;
-            }
-
-            
-        }
+        
     }
 }

@@ -2,21 +2,63 @@
 @{
     ViewData["Title"] = "Index";
 }
-<div>
-    <h1>Index</h1>
-    <table>
+<div class="container">
+    <h1> Shopping Cart </h1>
+    <table class="table table-md" style="color:white">
         <thead>
             <tr>
-            <th scope="col">
-                @Html.DisplayNameFor(model => model.CartItems)
-            </th>
-            <th scope="col"> 
-                @Html.DisplayNameFor(model => model.CartTotal)
-            </th>
-            <th scope="col"></th>
-        </tr>
+                <th scope="col">
+                    Seat Number 
+                </th>
+                <th scope="col"> 
+                    Play Name 
+                </th>
+                <th scope="col">
+                    Price
+                </th>
+                <th>
+                    Remove Item
+                </th>
+            </tr>
         </thead>
+        <tbody> 
+            @foreach(var item in Model.CartItems)
+            {   <tr>
+                    <td>
+                        @item.seat.SeatNumber
+                    </td>
+                    <td>
+                        @item.seat.Play?.PlayName
+                    </td>
+                    <td>
+                        @item.seat.Price
+                    </td>
+                    <td style="align-content: center">
+                        <form asp-controller="ShoppingCart" asp-action="Delete" asp-route-id="@item.Id">
+                             <button type="submit" class="btn btn-danger">Remove Item</button>
+                        </form>
+                    </td>
+                </tr>       
+            }
+           
+            <tr>
+                <td>
+                    Total
+                </td>
+                <td>
+                </td>
+                <td>
+                </td>
+                <td>
+                    @Model.CartTotal
+                </td>
+            </tr>
+        </tbody>
     </table>
+
+    <form>
+         <button type="submit" class="btn btn-success">Check Out</button>
+    </form>
 </div>
 
 

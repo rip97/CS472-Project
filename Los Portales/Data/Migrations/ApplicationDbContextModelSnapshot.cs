@@ -119,51 +119,11 @@ namespace Los_Portales.Data.Migrations
                     b.Property<int>("SeatNumber")
                         .HasColumnType("int");
 
-                    b.Property<int?>("TransactionId")
-                        .HasColumnType("int");
-
                     b.HasKey("SeatId");
 
                     b.HasIndex("PlayId");
 
-                    b.HasIndex("TransactionId");
-
                     b.ToTable("Seat");
-                });
-
-            modelBuilder.Entity("Los_Portales.Models.Transaction", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<long>("CreditCardNumber")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime>("ExpirationDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("NameOnCard")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("NumberOfTickets")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SecurityCode")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("Tax")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("Total")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Transaction");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -383,10 +343,6 @@ namespace Los_Portales.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Los_Portales.Models.Transaction", null)
-                        .WithMany("Seats")
-                        .HasForeignKey("TransactionId");
-
                     b.Navigation("Play");
                 });
 
@@ -442,11 +398,6 @@ namespace Los_Portales.Data.Migrations
                 });
 
             modelBuilder.Entity("Los_Portales.Models.Play", b =>
-                {
-                    b.Navigation("Seats");
-                });
-
-            modelBuilder.Entity("Los_Portales.Models.Transaction", b =>
                 {
                     b.Navigation("Seats");
                 });

@@ -28,7 +28,7 @@
                         @if(User.IsInRole("customer"))
                         {
                             <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Transactions" asp-action="Cart">Cart</a>
+                            <a class="nav-link text-light" asp-area="" asp-controller="ShoppingCart" asp-action="Index">Cart</a>
                             </li>
                         }
                         @if(User.IsInRole("admin"))

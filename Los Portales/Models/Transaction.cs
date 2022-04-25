@@ -3,11 +3,12 @@
 namespace Los_Portales.Models
 {
     public class Transaction
-    {
-        public int Id { get; set; }
+    {   
+        [Key]
+        public int TransactionId { get; set; }
         public decimal Total { get; set; }
         public decimal Tax { get; set; }
-        public ICollection<Seat>? Seats { get; set; }
+        // public ICollection<Seat>? Seats { get; set; }
         public int NumberOfTickets { get; set; }
 
         // public decimal CalcTotal() { return Total = NumberOfTickets * Tax; }

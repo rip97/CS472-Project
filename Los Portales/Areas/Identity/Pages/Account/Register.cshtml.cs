@@ -70,7 +70,9 @@ namespace Los_Portales.Areas.Identity.Pages.Account
         ///     directly from your code. This API may change or be removed in future releases.
         /// </summary>
         public class InputModel
-        {
+        {   
+            public int Id { get; set; }
+
             [Required]
             [Display(Name = "User Name")]
             public string UserName { get; set; }
