@@ -24,26 +24,24 @@ namespace Los_Portales.Controllers
             _userManager = userManger;
             _httpContextAccessor = httpContextAccessor;
         }
-        
+
         public async Task<IActionResult> Index()
         {
             var shoopingCart = new ShoppingCartViewModel();
             shoopingCart.CartItems = await _context.Cart.ToListAsync();
             var price = 0.0;
 
-            
             foreach (var shoopingCartItem in shoopingCart.CartItems)
-            {   
-                if(shoopingCartItem.UserId == GetUserId())
+            {
+                if (shoopingCartItem.UserId == GetUserId())
                 {
                     getSeats(shoopingCartItem);
                     price += shoopingCartItem.seat.Price;
                 }
             }
             shoopingCart.CartTotal = ((decimal)price);
-            return View(shoopingCart); 
+            return View(shoopingCart);
         }
-
 
         /// <summary>
         /// Helper Method to obtain the current user ID 

@@ -19,11 +19,21 @@
             {   
                 <div class="row" style="display:flex;margin-left:45px;">
                 @for(int j = 0; j < 10; j++)
-                {  
-                    <div class="seat-avialable"> 
-                        <h6 class="text-dark"> @Model[j+(i*10)].SeatNumber.ToString()</h6>
-                        <a class="text-dark" asp-action="AddToCart" asp-route-id=@Model[j+(i*10)].SeatId.ToString()><h6> View </h6></a>
-                    </div>
+                {   
+                    @if(Model[j+(i*10)].IsSold != 1)
+                    {
+                        <div class="seat-avialable"> 
+                            <h6 class="text-dark"> @Model[j+(i*10)].SeatNumber.ToString()</h6>
+                            <a class="text-dark" asp-action="AddToCart" asp-route-id=@Model[j+(i*10)].SeatId.ToString()><h6> View </h6></a>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="seat-taken">
+                            <h6 class="text-dark"> @Model[j+(i*10)].SeatNumber.ToString()</h6>
+                        </div>
+                    }
+                   
           
                 }
                 </div>       

@@ -2,6 +2,9 @@
 @{
     ViewData["Title"] = "Index";
 }
+  
+    
+
 <div class="container">
     <h1> Shopping Cart </h1>
     <table class="table table-md" style="color:white">
@@ -40,7 +43,6 @@
                     </td>
                 </tr>       
             }
-           
             <tr>
                 <td>
                     Total
@@ -56,7 +58,7 @@
         </tbody>
     </table>
 
-    <form>
+    <form asp-controller="Checkout" asp-action="CheckOut">
          <button type="submit" class="btn btn-success">Check Out</button>
     </form>
 </div>

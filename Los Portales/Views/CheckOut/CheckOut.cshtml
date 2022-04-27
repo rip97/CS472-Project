@@ -1,0 +1,38 @@
+﻿@model Los_Portales.Models.Checkout;
+
+@{
+     ViewData["Title"] = "CheckOut";
+}
+
+<div class="container-sm">
+     <form asp-action="CheckoutSuccess">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="CreditCardNumber" class="control-label"></label>
+                <input asp-for="CreditCardNumber" class="form-control" autocomplete="0000 0000 0000 0000" />
+                <span asp-validation-for="SecurityCode" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SecurityCode" class="control-label"></label>
+                <input asp-for="SecurityCode" class="form-control" autocomplete="000" />
+                <span asp-validation-for="SecurityCode" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ExpirationDate" class="control-label"></label>
+                <input asp-for="ExpirationDate" class="form-control" />
+                <span asp-validation-for="ExpirationDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NameOnCard" class="control-label"></label>
+                <input asp-for="NameOnCard" class="form-control" />
+                <span asp-validation-for="NameOnCard" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-success" />
+            </div>
+        </form>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

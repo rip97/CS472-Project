@@ -177,9 +177,7 @@ namespace Los_Portales.Controllers
                 seat.Play = play;
                 seats.Add(seat);
                 seat.SeatNumber = i + 1;
-                seat.Price = 0.00;
-                
-                
+                seat.Price = 0.00;             
             }
             return seats;
         }
