@@ -42,15 +42,25 @@
             <td>
                 @if(User.IsInRole("admin"))
                 {
-                <a asp-action="Edit" asp-route-id="@item.PlayId">Edit | </a> 
-                <a asp-controller="Seats" asp-action="Index" asp-route-id="@item.PlayId">Assign Seat Prices | </a> 
-                <a asp-action="Delete" asp-route-id="@item.PlayId">Delete</a>
+                    <a asp-action="Edit" asp-route-id="@item.PlayId">Edit | </a> 
+                    <a asp-controller="Seats" asp-action="Index" asp-route-id="@item.PlayId">Assign Seat Prices | </a> 
+                    <a asp-action="Delete" asp-route-id="@item.PlayId">Delete</a>
                 }
-                @if(User.IsInRole("customer"))
+                else if(User.IsInRole("customer"))
                 {
                     <a asp-controller="Seats" asp-action="SeatingChart" asp-route-id=@item.PlayId>Seats</a>
                 }
+                else
+                {
+                    
+                 <a class="nav-link text-light" asp-area="Identity" asp-page="/Account/Login">You must have an account to purchase a ticket: login here</a>
+                  
+                }
             </td>
+            
+            
+                
+                
         </tr>
     }
     </tbody>

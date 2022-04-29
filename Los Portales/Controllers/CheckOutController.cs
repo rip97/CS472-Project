@@ -1,11 +1,13 @@
 ﻿using Los_Portales.Data;
 using Los_Portales.Models;
 using Los_Portales.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Los_Portales.Controllers
-{
+{   
+    [Authorize(Roles = "customer")]
     public class CheckOutController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -27,37 +29,29 @@ namespace Los_Portales.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CheckOutSuccess([Bind("CreditCardNumber,ExpirationDate,SecurityCode,NameOnCard,Seats,Plays,CartObj,Total")] Checkout checkout)
+        public async Task<IActionResult> CheckOutSuccess([Bind("CreditCardNumber,ExpirationDate,SecurityCode,NameOnCard")] Checkout checkout)
         {   if(ModelState.IsValid)
             {
 
                 // get the shopping cart data
                 var shoppingCart = getShoppingCart();
+                
+                // mark the sold seats in the data base 
                 foreach(var item in shoppingCart.CartItems)
                 {
-                    checkout.Seats?.Add(item.seat);
-                    checkout.Plays?.Add(item.seat.Play);
-                    checkout.CartObj.Add(item);
-                }
-
-                checkout.Total = shoppingCart.CartTotal;
-                
-
-                // mark the sold seats in the data base 
-                foreach(var item in checkout.Seats)
-                {
-                    item.IsSold.Equals(true);
-                    if (!await updateSeat(item.SeatId, item))
+                    item.seat.IsSold = 1;
+                    if (!await updateSeat(item.SeatId, item.seat))
                         return NotFound();
 
                 }
 
                 // cretae the transaction and save to database 
                 Transaction transaction = new Transaction();
-                await createTransaction(transaction,checkout);
+                await createTransaction(transaction,shoppingCart);
 
                 // dump cart objects in the database with asscoiated user Id 
-                foreach(var item in checkout.CartObj)
+                ViewBag.ShoppingCart = shoppingCart.CartItems;
+                foreach (var item in shoppingCart.CartItems)
                 {
                     if(!await deleteCartObject(item.Id, item))
                         return NotFound();
@@ -177,10 +171,12 @@ namespace Los_Portales.Controllers
         /// <param name="transaction"></param>
         /// <param name="checkout"></param>
         /// <returns></returns>
-        private async Task createTransaction(Transaction transaction, Checkout checkout)
+        private async Task createTransaction(Transaction transaction, ShoppingCartViewModel shoppingCart)
         {
-            transaction.NumberOfSeats = checkout.Seats.Count;
-            transaction.TotalCost = ((double)checkout.Total);
+            transaction.NumberOfSeats = shoppingCart.CartItems.Count;
+            transaction.TotalCost = ((double)shoppingCart.CartTotal);
+            int tranId = await getLastTransactionId() + 1000;
+            transaction.TransactionId = tranId;
             await addTransaction(transaction);
             
         }
@@ -192,8 +188,17 @@ namespace Los_Portales.Controllers
         /// <returns></returns>
         private async Task addTransaction(Transaction transaction)
         {
-            _context.Add(transaction);
+            _context.Transaction.Add(transaction);
             await _context.SaveChangesAsync();
+        }
+
+        private async Task<int> getLastTransactionId()
+        {
+            List<Transaction> transactions = _context.Transaction.ToList();
+            if (transactions.Count == 0)
+                return 1;
+            else 
+                return transactions.Count;
         }
     }
 }

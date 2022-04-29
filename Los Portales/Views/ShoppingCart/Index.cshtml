@@ -3,7 +3,6 @@
     ViewData["Title"] = "Index";
 }
   
-    
 
 <div class="container">
     <h1> Shopping Cart </h1>
@@ -58,9 +57,21 @@
         </tbody>
     </table>
 
-    <form asp-controller="Checkout" asp-action="CheckOut">
-         <button type="submit" class="btn btn-success">Check Out</button>
-    </form>
+    <div class="row">
+        <div class=col-1>
+            <form asp-controller="Checkout" asp-action="CheckOut">
+                <button type="submit" class="btn btn-success">Check Out</button>
+            </form>
+        </div>
+        <div class="col-1">
+             <form asp-controller="Plays" asp-action="Index">
+                <button type="submit" class="btn btn-success">Back to Plays</button>
+            </form>
+        </div>
+    </div>
+    
+    
+
 </div>
 
 

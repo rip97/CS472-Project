@@ -12,8 +12,10 @@ namespace Los_Portales.Models
         public bool SeatsSold { get; set; } 
 
         public bool SeatsAvailabe { get; set; } 
-        
-        public bool TotalReveanue { get; set; } 
+
+        public IList<Seat>? seats { get; set; }
+
+
 
     }
 }

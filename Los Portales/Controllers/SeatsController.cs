@@ -62,9 +62,15 @@ namespace Los_Portales.Controllers
         public async Task<IActionResult> SeatingChart(int id)
         {
             var applicationDbContext = _context.Seat.Include(s => s.Play);
-
-
-            return View(findCorrectSeats(id, await applicationDbContext.ToListAsync()));
+            List<Seat> seats = findCorrectSeats(id, await applicationDbContext.ToListAsync());
+            List<int> isInCart = new List<int>();
+            foreach(var item in _context.Cart.ToList())
+            {
+                if (item.PlayId == id)
+                    isInCart.Add(item.SeatId);
+            }
+            ViewBag.IsInCart = isInCart;
+            return View(seats);
         }
 
         /// <summary>

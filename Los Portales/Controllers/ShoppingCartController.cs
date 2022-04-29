@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Los_Portales.Controllers
 {   
-    [Authorize]
+    [Authorize(Roles = "customer")]
     public class ShoppingCartController : Controller
     {   
         private readonly ApplicationDbContext _context;

@@ -1,9 +1,85 @@
-﻿
+﻿@using Los_Portales.ViewModels
+@model Los_Portales.Models.Transaction
+
 @{
     ViewData["Title"] = "CheckOutSuccess";
 }
 
 <div class="container">
-    <h1>Check Out Success</h1>
+    <h1 style="text-align:center"> Check Out Success </h1> 
+    <div class="row" style="background-color:gray">
+        <div class="col-6 offset-3"
+            <h2> Summary of Transasction </h2> 
+            <table class="table" style="color:white">
+                <thead>
+                    <tr> 
+                        <th scope="col">
+                           Transaction ID
+                        </th>
+                        <th scope="col"> 
+                            Seats Purchased
+                        </th>
+                        <th scope="col">
+                            Total Cost
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                   <tr>
+                       <td>
+                           @Model.TransactionId
+                       </td>
+                       <td>
+                           @Model.NumberOfSeats
+                       </td>
+                       <td>
+                           @Model.TotalCost
+                       </td>
+                   </tr>
+                </tbody>
+            </table>
+            <br />
+            <h2>Details Of Your Purchased Seat(s)</h2>
+            <table class="table" style="color:white">
+                <thead>
+                    <tr> 
+                        <th scope="col">
+                           Name of Play
+                        </th>
+                        <th scope="col"> 
+                            Seat Number Purchased 
+                        </th>
+                        <th scope="col">
+                            Date 
+                        </th>
+                        <th scope="col">
+                            Time 
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach(Cart cartItem in ViewBag.Shoppingcart)
+                    {
+                        <tr>
+                            <td>
+                                @cartItem.seat.Play.PlayName
+                            </td>
+                            <td>
+                                @cartItem.seat.SeatNumber
+                            </td>
+                            <td>
+                                @cartItem.seat.Play.PlayDate
+                            </td>
+                            <td>
+                                @cartItem.seat.Play.PlayTime
+                            </td>
+                       </tr>
+                    }
+           
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
 </div>
 

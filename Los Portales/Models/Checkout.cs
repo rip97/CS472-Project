@@ -21,14 +21,6 @@ namespace Los_Portales.Models
         [Required]
         [DataType(DataType.Text)]
         public string? NameOnCard { get; set; } 
-
-        public ICollection<Seat>? Seats { get; set; }
-
-        public ICollection<Play>? Plays { get; set; }   
-
-        public ICollection<Cart>? CartObj { get; set; }
-
-        public decimal? Total { get; set; }
         
     }
 }

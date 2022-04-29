@@ -31,6 +31,14 @@ body {
     margin-bottom: 60px;
 }
 
+.seat-report {
+    background-color:darkgray;
+    height: 80px;
+    width: 80px;
+    margin: 20px;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
 .seat-avialable {
     background-color: #00ff90;
     height: 80px;

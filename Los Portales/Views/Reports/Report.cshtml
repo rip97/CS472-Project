@@ -1,5 +1,84 @@
-﻿@{
+﻿@model Los_Portales.Models.Report;
+@{
     ViewData["Title"] = "Report";
 }
 
-<h1> Report </h1>
+<div class="container">
+    <h1>Report for @Model.PlayName </h1>
+    <a asp-action="Index">Generate New Report</a>
+    
+    @if(Model.SeatsSold == true && Model.SeatsAvailabe == false)
+    {   
+       <div class="container-seat">
+            @for(int i = 0; i <8; i++)
+            {   
+                <div class="row">
+                @for(int j = 0; j < 10; j++)
+                {   
+                    @if(Model.seats[j+(i*10)].IsSold == 1)
+                    {
+                        <div class="seat-report"> 
+                            <h6 class="text-light"> @Model.seats[j+(i*10)].SeatNumber.ToString()</h6>
+                            <h6> Seat Sold</h6>
+                            </div>
+                    }
+                        
+                }
+                </div>       
+            }     
+        </div> 
+    }
+    @if(Model.SeatsAvailabe == true && Model.SeatsSold == false)
+    {
+        // seats available 
+        <div class="container-seat">
+            @for(int i = 0; i <8; i++)
+            {   
+                <div class="row">
+                @for(int j = 0; j < 10; j++)
+                {   
+                    @if(Model.seats[j+(i*10)].IsSold != 1)
+                    {
+                        <div class="seat-report"> 
+                            <h6 class="text-light"> @Model.seats[j+(i*10)].SeatNumber.ToString()</h6>
+                            <h6> Seat Availabe</h6>
+                        </div>
+                    }        
+                }
+                </div>       
+            }     
+        </div> 
+        
+    }
+    @if(Model.SeatsSold == true && Model.SeatsAvailabe==true)
+    {
+        <div class="container-seat">
+            @for(int i = 0; i <8; i++)
+            {   
+                <div class="row">
+                @for(int j = 0; j < 10; j++)
+                {   
+                    @if(Model.seats[j+(i*10)].IsSold != 1)
+                    {
+                        <div class="seat-report"> 
+                            <h6 class="text-light"> @Model.seats[j+(i*10)].SeatNumber.ToString()</h6>
+                            <h6> Seat Availabe</h6>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="seat-report"> 
+                            <h6 class="text-light"> @Model.seats[j+(i*10)].SeatNumber.ToString()</h6>
+                            <h6 class="text-dark"> Seat Sold</h6>
+                            </div>
+                        }
+                    }
+                </div>       
+            }     
+        </div> 
+    }
+
+
+    
+</div>
+
