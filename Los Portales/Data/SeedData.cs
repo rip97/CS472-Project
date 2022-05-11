@@ -21,38 +21,55 @@ namespace Los_Portales.Data
                 await CreateRole(serviceProvider, "admin");
                 await CreateRole(serviceProvider, "customer");
                 await AddUserToRole(serviceProvider, adminID, "admin");
-                SeedDB(context, adminID);
-                //SeedDB(context);
+                
+                SeedPlays(context);
+                SeedSeats(context);
             }
         }
 
-        // creates the theater admin owner 
-        private static void SeedDB(ApplicationDbContext context, string adminID)
-        {
-            if (context.Admin.Any())
-            {
-                return;   // DB has been seeded
-            }
-            else
-            {
-                context.Admin.Add(
-                    new Admin
-                    {
-                        FirstName = "V",
-                        LastName = "Edurado",
-                        UserName = "vEdurado",
-                        Role = "admin",
-                        Password="SuperAdmin22!"
-                        
-                    });
-            }
-
-        }
-
-        
-        private static void SeedDB(ApplicationDbContext context)
+        private static void SeedSeats(ApplicationDbContext context)
         {   
+            if(!context.Seat.Any())
+            {
+                foreach (var item in context.Play)
+                {
+                    for (int i = 0; i < 80; i++)
+                    {
+                        context.Seat.Add(
+                            new Seat()
+                            {
+                                PlayId = item.PlayId,
+                                SeatNumber = i + 1,
+                                IsSold = 0,
+                                Price = 25,
+                                Play = item
+
+                            }); ;
+
+
+                    }
+
+                }
+
+                context.SaveChanges();
+            }
             
+        }
+        private static void SeedPlays(ApplicationDbContext context)
+        {   
+
+            if(!context.Play.Any())
+            {
+                    context.Play.AddRange
+                (
+                    new Play() { PlayName = "Coco", PlayDate = new DateTime(2022, 8, 8), PlayTime = new DateTime(2022, 8, 8, 13, 0, 0) },
+                    new Play() { PlayName = "Soul", PlayDate = new DateTime(2022, 6, 10), PlayTime = new DateTime(2022, 6, 10, 13, 0, 0) },
+                    new Play() { PlayName = "Soul", PlayDate = new DateTime(2022, 6, 10), PlayTime = new DateTime(2022, 6, 10, 19, 0, 0) }
+
+                );
+
+                context.SaveChanges();
+            }
         }
 
         public static async Task<string> CreateUser(IServiceProvider serviceProvider,

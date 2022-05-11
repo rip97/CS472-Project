@@ -18,9 +18,36 @@
                 <span asp-validation-for="SecurityCode" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ExpirationDate" class="control-label"></label>
-                <input asp-for="ExpirationDate" class="form-control" />
-                <span asp-validation-for="ExpirationDate" class="text-danger"></span>
+                <label asp-for="Month" class="control-label"></label>
+                <select asp-for="Month" class="form-select">
+                    <option value="01">January</option>
+                    <option value="02">February </option>
+                    <option value="03">March</option>
+                    <option value="04">April</option>
+                    <option value="05">May</option>
+                    <option value="06">June</option>
+                    <option value="07">July</option>
+                    <option value="08">August</option>
+                    <option value="09">September</option>
+                    <option value="10">October</option>
+                    <option value="11">November</option>
+                    <option value="12">December</option>
+                </select>
+                <span asp-validation-for="Month" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Year" class="control-label"></label>
+                <select asp-for="Year" class="form-select">
+                   
+                    <option value="2022"> 2022</option>
+                    <option value="2023"> 2023</option>
+                    <option value="2024"> 2024</option>
+                    <option value="2025"> 2025</option>
+                    <option value="2026"> 2026</option>
+                    <option value="2027"> 2027</option>
+                
+                </select>
+                <span asp-validation-for="Year" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="NameOnCard" class="control-label"></label>
@@ -28,7 +55,7 @@
                 <span asp-validation-for="NameOnCard" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-success" />
+                <input type="submit" value="Check Out" class="w-100 btn btn-lg btn-success" />
             </div>
         </form>
 </div>

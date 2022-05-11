@@ -68,10 +68,10 @@
                                 @cartItem.seat.SeatNumber
                             </td>
                             <td>
-                                @cartItem.seat.Play.PlayDate
+                                @cartItem.seat.Play.PlayDate.ToShortDateString()
                             </td>
                             <td>
-                                @cartItem.seat.Play.PlayTime
+                                @cartItem.seat.Play.PlayTime.ToShortTimeString()
                             </td>
                        </tr>
                     }

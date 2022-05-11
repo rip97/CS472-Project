@@ -29,7 +29,7 @@ namespace Los_Portales.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CheckOutSuccess([Bind("CreditCardNumber,ExpirationDate,SecurityCode,NameOnCard")] Checkout checkout)
+        public async Task<IActionResult> CheckOutSuccess([Bind("NameOnCard,Year,Month,SecurityCode,CreditCardNumber")] Checkout checkout)
         {   if(ModelState.IsValid)
             {
 

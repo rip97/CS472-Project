@@ -54,6 +54,7 @@ namespace Los_Portales.Controllers
         }
 
         // write a binary search for here for better preformace 
+
         // helper method to search for correct seats 
         private void getSeats(Cart cart)
         {

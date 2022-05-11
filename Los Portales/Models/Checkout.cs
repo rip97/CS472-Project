@@ -10,9 +10,12 @@ namespace Los_Portales.Models
         public string CreditCardNumber { get; set; }
 
         [Required]
-        [DataType(DataType.Date)]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/yyyy}")]
-        public DateOnly ExpirationDate { get; set; }
+        [DataType(DataType.Text)]
+        public string Month { get; set; }
+
+        [Required]
+        [DataType(DataType.Text)]
+        public string Year { get; set; }
 
         [Required]
         [DisplayFormat(ApplyFormatInEditMode =true, DataFormatString ="{0:000}")]

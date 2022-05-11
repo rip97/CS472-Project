@@ -51,8 +51,11 @@ namespace Los_Portales.Controllers
                 var newPlay = await _context.Play
                  .FirstOrDefaultAsync(m => m.PlayId == play.PlayId);
 
+                
                 // below code creates 80 defualt seats for the new play, the admin can edit the seat prices from the seat controller for each play
+                
                 List<Seat> seats = CreateSeats(newPlay);
+                
                 foreach(Seat seat in seats)
                 {
                     await Create(seat);
@@ -175,9 +178,10 @@ namespace Los_Portales.Controllers
                 Seat seat = new Seat();
                 seat.PlayId = play.PlayId;
                 seat.Play = play;
-                seats.Add(seat);
+                seat.IsSold = 0;
                 seat.SeatNumber = i + 1;
-                seat.Price = 0.00;             
+                seat.Price = 0.00;    
+                seats.Add(seat);
             }
             return seats;
         }
