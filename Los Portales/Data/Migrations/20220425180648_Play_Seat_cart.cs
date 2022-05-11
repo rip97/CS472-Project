@@ -54,7 +54,7 @@ namespace Los_Portales.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     SeatId = table.Column<int>(type: "int", nullable: false),
                     PlayId = table.Column<int>(type: "int", nullable: false),
-                    UserId = table.Column<int>(type: "int", nullable: false)
+                    UserId = table.Column<int>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {

@@ -1,4 +1,6 @@
-﻿namespace Los_Portales.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Los_Portales.Models
 {
     public class Admin
     {
@@ -14,16 +16,24 @@
             this.Password = password;
         }
 
+        [Required]
         public int AdminId { get; set; }
 
+        [Required]
         public string FirstName { get; set; }
         
+        [Required]
         public string LastName { get; set; }
 
+        [Required]
         public string UserName { get; set; }
 
+        [Required]
         public string Role { get; set; }
 
+
+        [DataType(DataType.Password)]
+        [Required]
         public string Password { get ; set; }
         
     }

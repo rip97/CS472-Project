@@ -65,6 +65,7 @@ namespace Los_Portales.Controllers
         {   
             if (ModelState.IsValid)
             {
+                admin.Role.ToLower();
                 var user = new IdentityUser { UserName = admin.UserName };
 
                 var result = await _userManager.CreateAsync(user, admin.Password);

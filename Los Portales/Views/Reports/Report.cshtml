@@ -3,9 +3,17 @@
     ViewData["Title"] = "Report";
 }
 
+
+<h1>Report for @Model.PlayName </h1>
+<a asp-action="Index">Generate New Report <br /><br /></a>
+
 <div class="container">
-    <h1>Report for @Model.PlayName </h1>
-    <a asp-action="Index">Generate New Report</a>
+    <h4> Total Revenue: $@ViewBag.Total</h4>  
+    <h6> Total Sold Seats: @ViewBag.TotalSoldSeats</h6>
+    <h6> Total Available Seats: @ViewBag.TotalAvailableSeats</h6>
+</div>
+
+<div class="container">
     
     @if(Model.SeatsSold == true && Model.SeatsAvailabe == false)
     {   
@@ -77,8 +85,6 @@
             }     
         </div> 
     }
-
-
     
 </div>
 
